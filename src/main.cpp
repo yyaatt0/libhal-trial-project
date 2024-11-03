@@ -54,7 +54,7 @@ resource_list resources{};
   }
 }
 
-void application();
+void application(resource_list p_resources);
 
 int main()
 {
@@ -66,7 +66,7 @@ int main()
   initialize_platform(resources);
 
   try {
-    application();
+    application(resources);
   } catch (std::bad_optional_access const& e) {
     if (resources.console) {
       hal::print(*resources.console.value(),
@@ -79,35 +79,35 @@ int main()
   std::terminate();
 }
 
-void application()
-{
-  using namespace std::chrono_literals;
+// void application()
+// {
+//   using namespace std::chrono_literals;
 
-  // Calling `value()` on the optional resources will perform a check and if the
-  // resource is not set, it will throw a std::bad_optional_access exception.
-  // If it is set, dereference it and store the address in the references below.
-  // When std::optional<T&> is in the standard, we will change to use that.
-  auto& led = *resources.status_led.value();
-  auto& clock = *resources.clock.value();
-  auto& console = *resources.console.value();
+//   // Calling `value()` on the optional resources will perform a check and if the
+//   // resource is not set, it will throw a std::bad_optional_access exception.
+//   // If it is set, dereference it and store the address in the references below.
+//   // When std::optional<T&> is in the standard, we will change to use that.
+//   auto& led = *resources.status_led.value();
+//   auto& clock = *resources.clock.value();
+//   auto& console = *resources.console.value();
 
-  hal::print(console, "Starting Application!\n");
-  hal::print(console, "Will reset after ~10 seconds\n");
+//   hal::print(console, "Starting Application!\n");
+//   hal::print(console, "Will reset after ~10 seconds\n");
 
-  for (int i = 0; i < 10; i++) {
-    // Print message
-    hal::print(console, "Hello, World\n");
+//   for (int i = 0; i < 10; i++) {
+//     // Print message
+//     hal::print(console, "Hello, World\n");
 
-    // Toggle LED
-    led.level(true);
-    hal::delay(clock, 500ms);
+//     // Toggle LED
+//     led.level(true);
+//     hal::delay(clock, 500ms);
 
-    led.level(false);
-    hal::delay(clock, 500ms);
-  }
+//     led.level(false);
+//     hal::delay(clock, 500ms);
+//   }
 
-  hal::print(console, "Resetting!\n");
-  hal::delay(clock, 100ms);
+//   hal::print(console, "Resetting!\n");
+//   hal::delay(clock, 100ms);
 
-  resources.reset();
-}
+//   resources.reset();
+// }
