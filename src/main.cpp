@@ -71,7 +71,7 @@ int main()
     if (resources.console) {
       hal::print(*resources.console.value(),
                  "A resource required by the application was not available!\n"
-                 "Calling terminate!\n");
+                 "Calling !\n");
     }
   }  // Allow any other exceptions to terminate the application
 
@@ -83,9 +83,11 @@ int main()
 // {
 //   using namespace std::chrono_literals;
 
-//   // Calling `value()` on the optional resources will perform a check and if the
+//   // Calling `value()` on the optional resources will perform a check and if
+//   the
 //   // resource is not set, it will throw a std::bad_optional_access exception.
-//   // If it is set, dereference it and store the address in the references below.
+//   // If it is set, dereference it and store the address in the references
+//   below.
 //   // When std::optional<T&> is in the standard, we will change to use that.
 //   auto& led = *resources.status_led.value();
 //   auto& clock = *resources.clock.value();

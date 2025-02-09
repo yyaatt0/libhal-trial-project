@@ -14,13 +14,18 @@
 
 #pragma once
 
-#include <optional>
 
+#include <libhal-util/bit_bang_i2c.hpp>
+#include <libhal-sensor/imu/mpu6050.hpp>
+#include <libhal-actuator/rc_servo.hpp>
+
+#include <libhal/pwm.hpp>
+
+#include <optional>
 #include <libhal/functional.hpp>
 #include <libhal/output_pin.hpp>
 #include <libhal/serial.hpp>
 #include <libhal/steady_clock.hpp>
-#include <libhal/i2c.hpp>
 
 struct resource_list
 {
@@ -32,11 +37,16 @@ struct resource_list
   };
   // Both status_led and clock are required in order to generate the terminate
   // blink pattern.
-  std::optional<hal::output_pin*> status_led;
+
   std::optional<hal::steady_clock*> clock;
+  std::optional<hal::output_pin*> status_led;
   // Initialize 3rd to support logging error messages
   std::optional<hal::serial*> console;
-  std::optional<hal::i2c*> i2c;
+
+  std::optional<hal::sensor::mpu6050*> mpu;
+  std::optional<hal::bit_bang_i2c*> i2c;
+  std::optional<hal::pwm*> pwm_x;
+  std::optional<hal::pwm*> pwm_y;
 };
 
 /**
