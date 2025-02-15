@@ -14,6 +14,9 @@ void application(resource_list p_resources)
   // auto& i2c = *p_resources.i2c.value();
   // hal::print<1024>(console, "this is so sad i2c\n");
 
+  auto& console = *p_resources.console.value();
+  auto& clock = *p_resources.clock.value();
+
   auto& mpu = *p_resources.mpu.value();
   hal::print<1024>(console, "this is so sad mpu\n");
 
@@ -42,40 +45,76 @@ void application(resource_list p_resources)
   float const threshold = 0.1;
 
   while (true) {
-    auto mpu_data = mpu.read();
+    // auto mpu_data = mpu.read();
 
-    hal::print<1024>(
-      console, "x: %fg, y: %fg, z: %fg\n", mpu_data.x, mpu_data.y,
-      mpu_data.z);
+    // hal::print<1024>(
+    //   console, "x: %fg, y: %fg, z: %fg\n", mpu_data.x, mpu_data.y,
+    //   mpu_data.z);
 
-    // Will be changed because I don't know how the data looks like from the MPU
-    hal::degrees change_x = mpu_data.x / threshold;
-    hal::degrees change_y = mpu_data.y / threshold;
+    // // Will be changed because I don't know how the data looks like from the MPU
+    // hal::degrees change_x = mpu_data.x / threshold;
+    // hal::degrees change_y = mpu_data.y / threshold;
 
-    if (mpu_data.x > threshold || mpu_data.x < (threshold * -1)) {
-      if (x_pos + change_x > rc_servo_settings.max_angle) {
-        x_pos = 1.0;
-      } else if (x_pos + change_x < rc_servo_settings.min_angle) {
-        x_pos = -1.0;
-      } else {
-        x_pos += change_x;
-      }
+    // if (mpu_data.x > threshold || mpu_data.x < (threshold * -1)) {
+    //   if (x_pos + change_x > rc_servo_settings.max_angle) {
+    //     x_pos = 1.0;
+    //   } else if (x_pos + change_x < rc_servo_settings.min_angle) {
+    //     x_pos = -1.0;
+    //   } else {
+    //     x_pos += change_x;
+    //   }
 
-      servo_x.position(x_pos);
-    }
+    //   servo_x.position(x_pos);
+    // }
 
-    if (mpu_data.y > threshold || mpu_data.y < (threshold * -1)) {
-      if (y_pos + change_y > rc_servo_settings.max_angle) {
-        y_pos = 1.0;
-      } else if (y_pos + change_y < rc_servo_settings.min_angle) {
-        y_pos = -1.0;
-      } else {
-        y_pos += change_y;
-      }
+    // if (mpu_data.y > threshold || mpu_data.y < (threshold * -1)) {
+    //   if (y_pos + change_y > rc_servo_settings.max_angle) {
+    //     y_pos = 1.0;
+    //   } else if (y_pos + change_y < rc_servo_settings.min_angle) {
+    //     y_pos = -1.0;
+    //   } else {
+    //     y_pos += change_y;
+    //   }
 
-      servo_y.position(y_pos);
-    }
+    //   servo_y.position(y_pos);
+    // }
 
-    hal::delay(clock, 100ms);
+    // hal::delay(clock, 100ms);
+
+//  servo_x.position(hal::degrees(-135));
+//     hal::delay(clock, 1000ms);
+
+    servo_x.position(hal::degrees(-90));
+    hal::delay(clock, 1000ms);
+
+    servo_x.position(hal::degrees(-45));
+    hal::delay(clock, 1000ms);
+
+    servo_x.position(hal::degrees(0));
+    hal::delay(clock, 1000ms);
+
+    servo_x.position(hal::degrees(45));
+    hal::delay(clock, 1000ms);
+
+    servo_x.position(hal::degrees(90));
+    hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(135));
+    // hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(180));
+    // hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(225));
+    // hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(270));
+    // hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(315));
+    // hal::delay(clock, 1000ms);
+
+    // servo_x.position(hal::degrees(360));
+    // hal::delay(clock, 1000ms);
   }
 }
